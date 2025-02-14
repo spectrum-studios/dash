@@ -1,0 +1,22 @@
+[package]
+name = "dash_tauri"
+version = "0.1.0"
+description = "Full-stack development template in Rust"
+authors = ["Spectrum Studios"]
+license = "Apache-2.0"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2.0.5", features = [] }
+
+[dependencies]
+portpicker = "0.1.1"
+serde = { version = "1.0.217", features = ["derive"] }
+serde_json = "1.0.138"
+tauri = { version = "2.2.5", features = [] }
+
+dash_backend = { path = "../backend" }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

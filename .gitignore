@@ -1,0 +1,17 @@
+# General
+**/dist
+**/target
+
+# Environment
+.env*
+
+# Cargo
+**/Cargo.lock
+
+# Tauri
+tauri/gen/schemas
+tauri/icons
+!tauri/icons/icon.png
+
+# Rustfmt
+**/*.rs.bk

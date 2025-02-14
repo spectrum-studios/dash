@@ -1,0 +1,13 @@
+[package]
+name = "dash_backend"
+version = "0.1.0"
+description = "Full-stack development template in Rust"
+authors = ["Spectrum Studios"]
+license = "Apache-2.0"
+edition = "2021"
+
+[dependencies]
+axum = { version = "0.8.1", features = ["ws"] }
+serde = "1.0.217"
+tokio = { version = "1.43.0", features = ["full"] }
+tower-http = { version = "0.6.2", features = ["cors"] }

@@ -1,0 +1,15 @@
+{
+  "useTabs": false,
+  "tabWidth": 2,
+  "printWidth": 100,
+  "endOfLine": "lf",
+
+  "overrides": [
+    {
+      "files": ["**/*.rs"],
+      "options": {
+        "tabWidth": 4
+      }
+    }
+  ]
+}

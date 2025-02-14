@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "auri-apps.tauri-vscode",
+    "esbenp.prettier-vscode",
+    "fill-labs.dependi",
+    "jinxdash.prettier-rust",
+    "ms-azuretools.vscode-docker",
+    "rust-lang.rust-analyzer",
+    "vadimcn.vscode-lldb"
+  ]
+}

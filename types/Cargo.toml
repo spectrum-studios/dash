@@ -1,0 +1,9 @@
+[package]
+name = "dash_types"
+version = "0.1.0"
+description = "Full-stack development template in Rust"
+authors = ["Spectrum Studios"]
+license = "Apache-2.0"
+edition = "2021"
+
+[dependencies]

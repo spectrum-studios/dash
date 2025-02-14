@@ -1,0 +1,18 @@
+[package]
+name = "dash_frontend"
+version = "0.1.0"
+description = "Full-stack development template in Rust"
+authors = ["Spectrum Studios"]
+license = "Apache-2.0"
+edition = "2021"
+
+[dependencies]
+console_log = "1.0.0"
+console_error_panic_hook = "0.1.7"
+js-sys = "0.3.77"
+leptos = { version = "0.7.7", features = ["csr"] }
+log = "0.4.25"
+serde = { version = "1.0.217", features = ["derive"] }
+serde-wasm-bindgen = "0.6.5"
+wasm-bindgen = "0.2.100"
+wasm-bindgen-futures = "0.4.50"
