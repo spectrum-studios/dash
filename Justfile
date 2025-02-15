@@ -14,6 +14,10 @@ dev:
 build:
   cargo tauri build
 
+# Start server
+server:
+  cargo run --bin dash_server
+
 # Format files
 format:
   cargo fmt

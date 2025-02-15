@@ -1,13 +1,15 @@
 #![cfg_attr(all(not(debug_assertions), target_os = "windows"), windows_subsystem = "windows")]
 
+use tauri::{ Builder, async_runtime };
+
 use dash_backend::app;
 
 struct Port(u16);
 
 fn main() {
     let port = portpicker::pick_unused_port().expect("failed to find unused port");
-    tauri::async_runtime::spawn(app(port));
-    tauri::Builder::default()
+    async_runtime::spawn(app(port));
+    Builder::default()
         .manage(Port(port))
         .invoke_handler(tauri::generate_handler![get_port])
         .run(tauri::generate_context!())

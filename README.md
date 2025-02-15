@@ -48,7 +48,7 @@ rustup install nightly
 rustup default nightly
 rustup component add rustfmt clippy
 rustup target add wasm32-unknown-unknown
-cargo install just leptosfmt tauri-cli trunk
+cargo install just leptosfmt sqlx-cli tauri-cli trunk
 ```
 
 ### Operations
