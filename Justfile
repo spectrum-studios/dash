@@ -18,6 +18,14 @@ build:
 server:
   cargo run --bin dash_server
 
+# Build crates
+crate:
+  cargo build -p dash_types
+  cargo build -p dash_server
+  cargo build -p dash_backend
+  cargo build -p dash_frontend
+  cargo build -p dash_tauri
+
 # Format files
 format:
-  cargo fmt
+  cargo +nightly fmt --all

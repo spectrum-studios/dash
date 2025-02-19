@@ -1,14 +1,13 @@
-use std::{ env, time::Duration };
+use std::env;
+use std::time::Duration;
 
 use once_cell::sync::OnceCell;
-use sqlx::{ any::Any, Pool };
-
+use sqlx::Pool;
+use sqlx::any::Any;
 #[cfg(not(any(feature = "postgres", feature = "sqlite")))]
 use sqlx::any::AnyPoolOptions;
-
 #[cfg(all(feature = "postgres", not(feature = "sqlite")))]
 use sqlx::{ PgPool, postgres::PgPoolOptions };
-
 #[cfg(all(feature = "sqlite", not(feature = "postgres")))]
 use sqlx::{ SqlitePool, sqlite::SqlitePoolOptions };
 

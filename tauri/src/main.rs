@@ -1,8 +1,7 @@
 #![cfg_attr(all(not(debug_assertions), target_os = "windows"), windows_subsystem = "windows")]
 
-use tauri::{ Builder, async_runtime };
-
 use dash_backend::app;
+use tauri::{ Builder, async_runtime };
 
 struct Port(u16);
 

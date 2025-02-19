@@ -1,4 +1,5 @@
 use std::net::SocketAddr;
+use std::path::PathBuf;
 
 use axum::Router;
 use http::header::{ AUTHORIZATION, CONTENT_TYPE };
@@ -6,17 +7,22 @@ use tokio::net::TcpListener;
 use tower::ServiceBuilder;
 use tower_http::cors::{ Any, CorsLayer };
 
+mod controllers;
+mod middleware;
 mod pool;
+mod strategies;
 
 #[tokio::main]
 async fn main() {
     if cfg!(debug_assertions) {
-        match dotenv::dotenv() {
+        let _ = match dotenv::dotenv() {
             Ok(path) => {
                 println!("Found .env file at {}", path.display());
+                path
             }
             Err(error) => {
                 println!("Cannot access .env file: {}", error);
+                PathBuf::from("")
             }
         };
     }
@@ -28,7 +34,11 @@ async fn main() {
         .allow_headers([AUTHORIZATION, CONTENT_TYPE])
         .expose_headers(Any);
 
-    let app = Router::new().layer(ServiceBuilder::new().layer(cors));
+    let app = Router::new()
+        .nest("/auth", controllers::auth_controller::routes())
+        .nest("/user", controllers::user_controller::routes())
+        .nest("/ws", controllers::ws_controller::routes())
+        .layer(ServiceBuilder::new().layer(cors));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3001));
     let listener = TcpListener::bind(addr).await.unwrap();

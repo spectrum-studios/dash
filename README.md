@@ -51,6 +51,30 @@ rustup target add wasm32-unknown-unknown
 cargo install just leptosfmt sqlx-cli tauri-cli trunk
 ```
 
+### Configuration
+
+Edit environment variables in `.env` in root directory:
+
+```properties
+# Authentication token expiry in seconds
+AUTH_TOKEN_EXPIRY=1
+
+# Database URL
+DATABASE_URL="sqlite://database/db.sqlite"
+
+# JWT audience
+JWT_AUDIENCE="spectrumstudios.com"
+
+# JWT issuer
+JWT_ISSUER="Spectrum Studios"
+
+# JWT secret
+JWT_SECRET="yourjwtsecret"
+
+# 16-byte password salt
+PASSWORD_SALT="yourpasswordsalt"
+```
+
 ### Operations
 
 Custom commands are saved in `Justfile` in root directory, and they can be called by `just` command:

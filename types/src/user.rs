@@ -1,10 +1,12 @@
-use std::{ fmt, str::FromStr };
+use std::fmt;
+use std::str::FromStr;
 
 use email_address::EmailAddress;
 use serde::{ Deserialize, Serialize };
-
 #[cfg(feature = "sqlx")]
-use sqlx::{ any::AnyRow, FromRow, Row };
+use sqlx::any::AnyRow;
+#[cfg(feature = "sqlx")]
+use sqlx::{ FromRow, Row };
 
 #[derive(Clone, Debug, Serialize)]
 pub struct User {
@@ -23,7 +25,7 @@ impl<'r> FromRow<'r, AnyRow> for User {
         let uuid: String = row.try_get("uuid")?;
         let username: String = row.try_get("username")?;
         let email: EmailAddress = match row.try_get::<String, &str>("email") {
-            Ok(address) => { EmailAddress::new_unchecked(address) }
+            Ok(address) => EmailAddress::new_unchecked(address),
             Err(e) => {
                 println!("Error: {}", e);
                 EmailAddress::new_unchecked("")
@@ -32,14 +34,7 @@ impl<'r> FromRow<'r, AnyRow> for User {
         let password: String = row.try_get("password")?;
         let is_admin = row.try_get("is_admin")?;
 
-        Ok(Self {
-            id,
-            uuid,
-            username,
-            email,
-            password,
-            is_admin,
-        })
+        Ok(Self { id, uuid, username, email, password, is_admin })
     }
 }
 
@@ -113,43 +108,6 @@ impl LoginUser {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct ResetUser {
-    pub email: EmailAddress,
-    pub password: String,
-}
-
-impl fmt::Display for ResetUser {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Email: {}\nPassword: {}", self.email.email(), self.password)
-    }
-}
-
-impl ResetUser {
-    pub fn new(&self) -> Self {
-        Self {
-            email: EmailAddress::new_unchecked(""),
-            password: String::new(),
-        }
-    }
-
-    pub fn update_field(&self, key: &str, value: String) -> Result<Self, String> {
-        let mut user = self.clone();
-        match key {
-            "email" => {
-                user.email = EmailAddress::from_str(&value).unwrap();
-            }
-            "password" => {
-                user.password = value;
-            }
-            _ => {
-                return Err(format!("Invalid key: {}", key));
-            }
-        }
-        Ok(user)
-    }
-}
-
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
 #[cfg_attr(feature = "sqlx", derive(FromRow))]
 pub struct UserInfo {
@@ -166,18 +124,10 @@ impl fmt::Display for UserInfo {
 
 impl UserInfo {
     pub fn new() -> Self {
-        Self {
-            uuid: String::new(),
-            username: String::new(),
-            is_admin: false,
-        }
+        Self { uuid: String::new(), username: String::new(), is_admin: false }
     }
 
     pub fn from_user(user: User) -> Self {
-        Self {
-            uuid: user.uuid,
-            username: user.username,
-            is_admin: user.is_admin,
-        }
+        Self { uuid: user.uuid, username: user.username, is_admin: user.is_admin }
     }
 }
