@@ -39,6 +39,10 @@ Install **Rust** if have not:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
+Make sure there is an [**SQLite**](https://www.sqlite.org/) or [**PostgreSQL**](https://www.postgresql.org/) database
+ready for the server to manage data. Replace `DATABASE_URL` using `sqlite://db_name.sqlite` or
+`postgres://username:password@host/db_name` respectively during configuration in later stage.
+
 ### Install
 
 Enable nightly version, then install tools and command-line interface:
@@ -60,7 +64,7 @@ Edit environment variables in `.env` in root directory:
 AUTH_TOKEN_EXPIRY=1
 
 # Database URL
-DATABASE_URL="sqlite://database/db.sqlite"
+DATABASE_URL="database_url"
 
 # JWT audience
 JWT_AUDIENCE="spectrumstudios.com"
@@ -77,13 +81,8 @@ PASSWORD_SALT="yourpasswordsalt"
 
 ### Operations
 
-Custom commands are saved in `Justfile` in root directory, and they can be called by `just` command:
-
-```sh
-just
-```
-
-Typing `just` will show all available custom commands to use.
+Custom commands are saved in `Justfile` in root directory, and they can be called by `just` command. Typing `just` will
+show all available custom commands to use.
 
 ## Licensing
 
