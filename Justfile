@@ -18,6 +18,14 @@ build:
 server:
   cargo run --bin dash_server
 
+# Migration by creating database tables
+sqlx-migrate:
+  sqlx migrate run --source migrations
+
+# Revert migration by dropping database tables
+sqlx-revert:
+  sqlx migrate revert --source migrations
+
 # Build crates
 crate:
   cargo build -p dash_types

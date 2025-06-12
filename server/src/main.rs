@@ -15,7 +15,7 @@ mod strategies;
 #[tokio::main]
 async fn main() {
     if cfg!(debug_assertions) {
-        let _ = match dotenv::dotenv() {
+        let _ = match dotenvy::dotenv() {
             Ok(path) => {
                 println!("Found .env file at {}", path.display());
                 path
