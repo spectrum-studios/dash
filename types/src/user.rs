@@ -2,11 +2,11 @@ use std::fmt;
 use std::str::FromStr;
 
 use email_address::EmailAddress;
-use serde::{ Deserialize, Serialize };
+use serde::{Deserialize, Serialize};
 #[cfg(feature = "sqlx")]
 use sqlx::any::AnyRow;
 #[cfg(feature = "sqlx")]
-use sqlx::{ FromRow, Row };
+use sqlx::{FromRow, Row};
 
 #[derive(Clone, Debug, Serialize)]
 pub struct User {

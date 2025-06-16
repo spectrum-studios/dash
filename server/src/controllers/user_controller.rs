@@ -1,13 +1,13 @@
-use axum::extract::{ Json, Request };
+use axum::extract::{Json, Request};
 use axum::http::StatusCode;
-use axum::routing::{ delete, get };
-use axum::{ RequestExt, Router, middleware };
+use axum::routing::{delete, get};
+use axum::{RequestExt, Router, middleware};
 use dash_types::auth::AuthErrorType;
 use dash_types::user::UserInfo;
 
 use crate::middleware::auth_token::auth_token;
-use crate::strategies::auth_strategy::{ AuthClaims, AuthError, AuthRequestClaims, JWTClaims };
-use crate::strategies::user_strategy::{ delete_user_by_uuid, get_all_users, get_db_user_by_uuid };
+use crate::strategies::auth_strategy::{AuthClaims, AuthError, AuthRequestClaims, JWTClaims};
+use crate::strategies::user_strategy::{delete_user_by_uuid, get_all_users, get_db_user_by_uuid};
 
 async fn get_user_info(request: Request) -> Result<(StatusCode, Json<UserInfo>), AuthError> {
     let claims = AuthRequestClaims::from_header(request.headers());
@@ -18,7 +18,7 @@ async fn get_user_info(request: Request) -> Result<(StatusCode, Json<UserInfo>),
 }
 
 async fn get_all_user_info(
-    request: Request
+    request: Request,
 ) -> Result<(StatusCode, Json<Vec<UserInfo>>), AuthError> {
     let claims = AuthClaims::from_header(request.headers());
     if claims.acc {
@@ -53,11 +53,11 @@ async fn delete_user(request: Request) -> Result<StatusCode, AuthError> {
 }
 
 pub fn routes() -> Router {
-  Router::new()
-      .route(
-          "/info",
-          get(get_user_info).layer(middleware::from_fn(auth_token::<AuthRequestClaims>))
-      )
-      .route("/all", get(get_all_user_info).layer(middleware::from_fn(auth_token::<AuthClaims>)))
-      .route("/", delete(delete_user).layer(middleware::from_fn(auth_token::<AuthClaims>)))
+    Router::new()
+        .route(
+            "/info",
+            get(get_user_info).layer(middleware::from_fn(auth_token::<AuthRequestClaims>)),
+        )
+        .route("/all", get(get_all_user_info).layer(middleware::from_fn(auth_token::<AuthClaims>)))
+        .route("/", delete(delete_user).layer(middleware::from_fn(auth_token::<AuthClaims>)))
 }

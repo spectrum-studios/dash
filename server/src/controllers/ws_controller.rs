@@ -1,16 +1,16 @@
 use std::collections::HashSet;
-use std::sync::{ Arc, Mutex };
+use std::sync::{Arc, Mutex};
 
 use axum::Router;
 use axum::extract::State;
-use axum::extract::ws::{ Message, Utf8Bytes, WebSocket, WebSocketUpgrade };
+use axum::extract::ws::{Message, Utf8Bytes, WebSocket, WebSocketUpgrade};
 use axum::response::IntoResponse;
 use axum::routing::get;
 use futures::sink::SinkExt;
 use futures::stream::StreamExt;
 use tokio::sync::broadcast;
 
-use crate::strategies::auth_strategy::{ AuthRequestClaims, JWTClaims };
+use crate::strategies::auth_strategy::{AuthRequestClaims, JWTClaims};
 use crate::strategies::user_strategy::get_db_user_by_uuid;
 
 struct AppState {

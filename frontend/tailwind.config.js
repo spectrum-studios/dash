@@ -1,7 +1,7 @@
 module.exports = {
   content: {
     relative: true,
-    files: ["./*.html", "./src/*.rs"],
+    files: ["./*.html", "./src/**/*.rs"],
   },
   theme: {
     extend: {},

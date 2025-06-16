@@ -11,7 +11,10 @@ use serde_json::json;
 use crate::strategies::auth_strategy::JWTClaims;
 
 pub async fn auth_token<T>(claims: T, mut request: Request, next: Next) -> Response
-    where T: JWTClaims, T: Serialize, T: Debug
+where
+    T: JWTClaims,
+    T: Serialize,
+    T: Debug,
 {
     let header_map = request.headers_mut();
     while header_map.contains_key("X-Claims") {

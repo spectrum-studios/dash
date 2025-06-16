@@ -1,8 +1,7 @@
 use dash_backend::app;
-use tauri::{ Builder, async_runtime };
+use tauri::{Builder, async_runtime};
 
 struct Port(u16);
-
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {

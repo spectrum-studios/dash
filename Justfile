@@ -37,3 +37,4 @@ crate:
 # Format files
 format:
   cargo +nightly fmt --all
+  leptosfmt -e -q frontend/src/*.rs frontend/src/**/*.rs

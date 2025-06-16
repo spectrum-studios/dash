@@ -7,9 +7,9 @@ use sqlx::any::Any;
 #[cfg(not(any(feature = "postgres", feature = "sqlite")))]
 use sqlx::any::AnyPoolOptions;
 #[cfg(all(feature = "postgres", not(feature = "sqlite")))]
-use sqlx::{ PgPool, postgres::PgPoolOptions };
+use sqlx::{PgPool, postgres::PgPoolOptions};
 #[cfg(all(feature = "sqlite", not(feature = "postgres")))]
-use sqlx::{ SqlitePool, sqlite::SqlitePoolOptions };
+use sqlx::{SqlitePool, sqlite::SqlitePoolOptions};
 
 #[cfg(not(any(feature = "postgres", feature = "sqlite")))]
 static POOL: OnceCell<Pool<Any>> = OnceCell::new();
@@ -31,12 +31,10 @@ pub async fn create_pool() {
     init_pool(database_url).await;
 }
 
-#[cfg(
-    any(
-        all(feature = "postgres", any(feature = "sqlite")),
-        all(feature = "sqlite", any(feature = "postgres"))
-    )
-)]
+#[cfg(any(
+    all(feature = "postgres", any(feature = "sqlite")),
+    all(feature = "sqlite", any(feature = "postgres"))
+))]
 async fn init_pool(_database_url: String) {
     panic!("Cannot enable both postgres and sqlite features at the same time");
 }
@@ -45,11 +43,11 @@ async fn init_pool(_database_url: String) {
 async fn init_pool(database_url: String) {
     sqlx::any::install_default_drivers();
 
-    let pool = match
-        AnyPoolOptions::new()
-            .max_connections(100)
-            .idle_timeout(Some(Duration::from_millis(1000)))
-            .connect(&database_url).await
+    let pool = match AnyPoolOptions::new()
+        .max_connections(100)
+        .idle_timeout(Some(Duration::from_millis(1000)))
+        .connect(&database_url)
+        .await
     {
         Ok(pool) => {
             println!("Database pool created from database_url: {}", database_url);
@@ -65,11 +63,11 @@ async fn init_pool(database_url: String) {
 
 #[cfg(all(feature = "postgres", not(feature = "sqlite")))]
 async fn init_pool(database_url: String) {
-    let pool = match
-        PgPoolOptions::new()
-            .max_connections(100)
-            .idle_timeout(Some(Duration::from_millis(1000)))
-            .connect(&database_url).await
+    let pool = match PgPoolOptions::new()
+        .max_connections(100)
+        .idle_timeout(Some(Duration::from_millis(1000)))
+        .connect(&database_url)
+        .await
     {
         Ok(pool) => {
             println!("Database pool created from database_url: {}", database_url);
@@ -85,11 +83,11 @@ async fn init_pool(database_url: String) {
 
 #[cfg(all(feature = "sqlite", not(feature = "postgres")))]
 async fn init_pool(database_url: String) {
-    let pool = match
-        SqlitePoolOptions::new()
-            .max_connections(100)
-            .idle_timeout(Some(Duration::from_millis(1000)))
-            .connect(&database_url).await
+    let pool = match SqlitePoolOptions::new()
+        .max_connections(100)
+        .idle_timeout(Some(Duration::from_millis(1000)))
+        .connect(&database_url)
+        .await
     {
         Ok(pool) => {
             println!("Database pool created from database_url: {}", database_url);
@@ -103,12 +101,10 @@ async fn init_pool(database_url: String) {
     POOL.set(pool).unwrap();
 }
 
-#[cfg(
-    any(
-        all(feature = "postgres", any(feature = "sqlite")),
-        all(feature = "sqlite", any(feature = "postgres"))
-    )
-)]
+#[cfg(any(
+    all(feature = "postgres", any(feature = "sqlite")),
+    all(feature = "sqlite", any(feature = "postgres"))
+))]
 pub fn get_pool() -> Pool<Any> {
     panic!("Cannot enable both postgres and sqlite features at the same time");
 }
